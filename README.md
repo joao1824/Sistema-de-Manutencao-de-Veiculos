@@ -1,3 +1,70 @@
 # Sistema-de-Manutencao-de-Veiculos
 Projeto De BDS II
 Grupo D
+
+# Modelo Físico Inicial
+Table veiculos {
+  placa varchar [primary key]
+  cd_cliente integer
+  marca varchar
+  modelo varchar
+  ano year
+  cd_seguro integer
+}
+
+Table clientes {
+  cd_cliente integer [primary key]
+  nome varchar
+}
+
+Table funcionarios {
+  cd_funcionario integer [primary key]
+  nome varchar
+}
+
+Table seguro {
+  cd_seguro integer [primary key]
+  nome varchar
+  contato varchar
+}
+
+Table manutencao {
+  cd_manutencao integer [primary key]
+  placa varchar
+  cd_funcionario int
+  cd_tipo int
+  cd_alas int
+
+
+}
+
+Table tipo_manutencao {
+  cd_tipo integer [primary key]
+  descricao varchar
+
+}
+
+Table agendamentos {
+  cd_agenda integer [primary key]
+  data date
+  cd_funcionario int
+  placa varchar
+  cd_tipo int
+}
+
+Table alas {
+  cd_alas integer [primary key]
+
+}
+
+Ref: seguro.cd_seguro < veiculos.cd_seguro // many-to-one
+
+Ref: veiculos.cd_cliente > clientes.cd_cliente
+
+Ref: manutencao.placa > veiculos.placa
+Ref: manutencao.cd_funcionario > funcionarios.cd_funcionario
+Ref: manutencao.cd_tipo > tipo_manutencao.cd_tipo
+Ref: manutencao.cd_alas > alas.cd_alas
+Ref: tipo_manutencao.cd_tipo < agendamentos.cd_tipo
+Ref: agendamentos.cd_funcionario > funcionarios.cd_funcionario
+Ref: agendamentos.placa > veiculos.placa
