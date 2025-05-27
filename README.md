@@ -68,3 +68,6 @@ Ref: manutencao.cd_alas > alas.cd_alas
 Ref: tipo_manutencao.cd_tipo < agendamentos.cd_tipo
 Ref: agendamentos.cd_funcionario > funcionarios.cd_funcionario
 Ref: agendamentos.placa > veiculos.placa
+
+
+![image](https://github.com/user-attachments/assets/02a1af83-6481-4e91-835e-bb6b71c550d5)
