@@ -1,0 +1,110 @@
+// TABELAS
+
+Table veiculos {
+  placa varchar [primary key]
+  cd_cliente integer
+  marca varchar
+  modelo varchar
+  ano int(4)
+  cd_seguro integer
+}
+
+Table clientes {
+  cd_cliente integer [primary key]
+  nm_cliente varchar
+  cpf varchar
+  telefone varchar
+}
+
+Table funcionarios {
+  cd_funcionario integer [primary key]
+  nm_funcionario varchar
+  cpf varchar
+  telefone varchar
+  data_nascimento date
+  data_entrada date
+  data_saida date
+  sexo char(1)
+  cd_status_funcionario int
+}
+
+Table seguros {
+  cd_seguro integer [primary key]
+  nm_seguradora varchar
+  status int
+  cd_status_seguros int
+}
+
+Table manutencoes {
+  cd_manutencao integer [primary key]
+  placa varchar
+  cd_funcionario int
+  cd_tipo int
+  cd_alas int
+  vl_manutencao float(5,2)
+  cd_status_manutencao int
+}
+
+Table tipos_manutencao {
+  cd_tipo integer [primary key]
+  descricao varchar
+
+}
+
+Table agendamentos {
+  cd_agenda integer [primary key]
+  data_contatada date
+  data_agendada date
+  horario_agendado time
+  cd_funcionario int
+  placa varchar
+  cd_tipo int
+  cd_status_agendamento int
+}
+
+Table alas {
+  cd_alas integer [primary key]
+  ala varchar
+  descricao varchar
+}
+
+// TABELAS STATUS
+
+Table status_seguros {
+  cd_status_seguros int [primary key]
+  status varchar
+}
+
+Table status_funcionarios {
+  cd_status_funcionarios int [primary key]
+  status varchar
+}
+
+Table status_agendamentos {
+  cd_status_agendamentos int [primary key]
+  status varchar
+}
+
+Table status_manutencoes {
+  cd_status_manutencoes int [primary key]
+  status varchar
+}
+
+Ref: seguros.cd_seguro < veiculos.cd_seguro
+
+Ref: veiculos.cd_cliente > clientes.cd_cliente
+
+Ref: manutencoes.placa > veiculos.placa
+Ref: manutencoes.cd_funcionario > funcionarios.cd_funcionario
+Ref: manutencoes.cd_tipo > tipos_manutencao.cd_tipo
+Ref: manutencoes.cd_alas > alas.cd_alas
+
+Ref: tipos_manutencao.cd_tipo < agendamentos.cd_tipo
+
+Ref: agendamentos.cd_funcionario > funcionarios.cd_funcionario
+Ref: agendamentos.placa > veiculos.placa
+
+Ref: funcionarios.cd_status_funcionario > status_funcionarios.cd_status_funcionarios
+Ref: agendamentos.cd_status_agendamento > status_agendamentos.cd_status_agendamentos
+Ref: manutencoes.cd_status_manutencao > status_manutencoes.cd_status_manutencoes
+Ref: seguros.cd_status_seguros > status_seguros.cd_status_seguros
