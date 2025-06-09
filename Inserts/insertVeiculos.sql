@@ -8,6 +8,6 @@ insert into veiculos (placa, cd_cliente, marca, modelo, ano, cd_seguro)
 		     ('NGM2579', 7, 'BMW', 'i3', 2019, 7),
 		     ('HZO6425', 8, 'Fiat', 'UNO', 2012, 8),
 		     ('FSZ7576', 9, 'Nissan', 'XTerra', 2023, 9),
-		     ('ADH2381', 10, 'Honda', 'Accord', 2018, 10),
+		     ('ADH2381', 10, 'Honda', 'Accord', 2018, 10)
 
 create [nonclustered] index Idx_seguros_placa on veiculos (placa)

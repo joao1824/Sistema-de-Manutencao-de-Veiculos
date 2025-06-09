@@ -6,14 +6,10 @@ use sistema_manutencao_veiculos
 go
 
 
-/*==============================================================*/
-/* Table: avaliacao_aluno                                       */
-/*==============================================================*/
 
 
-
--- Tabela cliente
-create table cliente(
+-- Tabela clientes
+create table clientes(
 	cd_cliente int not null primary key,
 	nm_cliente varchar(50) not null,
 	cpf varchar(14) null,
@@ -48,7 +44,7 @@ create table veiculos(
 	ano int not null,
 	cd_seguro int not null,
 	constraint fk_cliente foreign key (cd_cliente)
-	references cliente(cd_cliente),
+	references clientes(cd_cliente),
 	constraint fk_seguro foreign key (cd_seguro)
 	references seguros(cd_seguro)
 )
@@ -64,8 +60,8 @@ go
 -- Tabela alas
 create table alas(
 	cd_alas int not null primary key,
-	ala varchar(20) not null,
-	descricao varchar(100) null
+	ala varchar(50) not null,
+	descricao varchar(200) null
 )
 go
 

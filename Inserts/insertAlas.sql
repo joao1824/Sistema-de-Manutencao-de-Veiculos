@@ -1,4 +1,4 @@
-insert into alas (cd_alas, ala, deswcricao) 
+insert into alas (cd_alas, ala, descricao) 
 values (1, 'Administrativo', 'Local de controle financeiro, notas fiscais, controle de estoque e pedidos de peças.'),
 (2, 'Almoxarifado', 'Guarda pecas, ferramentas, oleos, pneus, filtros, etc.'),
 (3, 'Recepcao', 'Onde o cliente entra, faz o agendamento, explica o problema e aprova orcamentos.'),
@@ -10,3 +10,6 @@ values (1, 'Administrativo', 'Local de controle financeiro, notas fiscais, contr
 (9, 'Vestiário', 'Para uso dos mecanicos: armarios, banheiro, chuveiros'),
 (10, 'Loja de Som e Personalizacao', 'Instalacao de som automotivo, alarmes, insulfilm, farois de LED, engates, etc.'),
 (11, 'Espaco de Treinamento', 'Para capacitação da equipe e treinamentos de marcas/parceiros');
+
+
+

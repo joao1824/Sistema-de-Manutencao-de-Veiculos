@@ -1,4 +1,4 @@
-INSERT INTO tipo_manutencao (cd_tipo, descricao) 
+INSERT INTO tipos_manutencao (cd_tipo, descricao) 
 VALUES 
 (1, 'Troca de óleo'),
 (2, 'Troca de pneu'),
