@@ -12,4 +12,4 @@ VALUES
 (10, 'Verificação do sistema de escapamento'),
 (11, 'Revisão completa');
 
-create [nonclustered] index Idx_tipos_manutencao_descricao on tipos_manutencao (descricao)
+
