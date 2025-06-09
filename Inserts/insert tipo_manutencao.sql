@@ -1,13 +1,15 @@
 INSERT INTO tipos_manutencao (cd_tipo, descricao) 
 VALUES 
-(1, 'Troca de Ûleo'),
+(1, 'Troca de √≥leo'),
 (2, 'Troca de pneu'),
 (3, 'Troca de bateria'),
-(4, 'VerificaÁ„o de freios'),
+(4, 'Verifica√ß√£o de freios'),
 (5, 'Troca de pastilhas de freio'),
 (6, 'Troca de amortecedores'),
-(7, 'Troca de velas de igniÁ„o'),
-(8, 'VerificaÁ„o do sistema de arrefecimento'),
+(7, 'Troca de velas de igni√ß√£o'),
+(8, 'Verifica√ß√£o do sistema de arrefecimento'),
 (9, 'Troca de embreagem'),
-(10, 'VerificaÁ„o do sistema de escapamento'),
-(11, 'Revis„o completa');
+(10, 'Verifica√ß√£o do sistema de escapamento'),
+(11, 'Revis√£o completa');
+
+create [nonclustered] index Idx_tipos_manutencao_descricao on tipos_manutencao (descricao)
