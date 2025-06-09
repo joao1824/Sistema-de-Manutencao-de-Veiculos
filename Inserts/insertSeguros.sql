@@ -8,6 +8,12 @@ insert into seguros  (cd_seguro, nm_seguradora, cd_status_seguros)
        		     (7, 'Suhai Seguros', 1),
        		     (8, 'Azul Seguros', 2),
        		     (9, 'Ituran', 1),
-       		     (10, 'HDI Seguros', 2)
-
-create [nonclustered] index Idx_seguros_nm_seguradora on seguros (nm_seguradora)
+       		     (10, 'HDI Seguros', 2),
+       		     (11, 'Minuto Seguradora', 1),
+	       	     (12, 'Youse', 2),
+	       	     (13, 'Seguradora Catarinense', 2),
+	       	     (14, 'Pier Seguradora', 1),
+	       	     (15, 'Forte Proteção Veicular', 1),
+	       	     (16, 'Liderança Proteção Veicular', 1),
+	       	     (17, 'Seguradora Tokio Marine', 1),
+	       	     (18, 'Allianz Brasil', 1),
