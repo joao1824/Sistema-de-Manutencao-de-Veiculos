@@ -34,7 +34,7 @@ app.get('/manutencoes', async(req , res) => { // req e res vai set usado depende
 
 
 // Iniciar o servidor na poprta 3001, senão der nessa porta tem que mudar, mas vai ter que mudar em ManutencoesList.jsx tambem
-app.listen(3001, () => {
+app.listen(3001, () => { 
     console.log('API do CRUD de manutenções rodando na porta 3001');
 });
 // Iniciar o servidor
