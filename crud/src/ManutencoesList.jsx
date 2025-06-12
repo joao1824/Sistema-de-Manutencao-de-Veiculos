@@ -12,10 +12,14 @@ export default function ManutencoesList() {
   }, []);
 
 
-
   return (
     <div id='crud'>
-      <h2 id='titulo'>Lista de Manutenções</h2>
+      
+      <div id='cabecalho'>
+        <h2>Lista de Manutenções</h2>
+        <span onClick={() => alert('Ainda não tenho uma função :(')} id='btnAdicionar'><b>+</b></span>
+      </div>
+      
       <table>
         <thead>
           <tr>
@@ -31,7 +35,7 @@ export default function ManutencoesList() {
         <tbody>
            {manutencoes.map(m => (  // aqui só represento por meio de um .map padrão
             <tr key={m.cd_manutencao}>
-              <td>{m.cd_manutencao}</td>
+              <td><b>{m.cd_manutencao}</b></td>
               <td>{m.placa}</td>
               <td>{m.cd_funcionario}</td>
               <td>{m.cd_tipo}</td>
