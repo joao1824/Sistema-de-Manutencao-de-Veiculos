@@ -1,10 +1,10 @@
 import React from 'react';
 import ManutencoesList from './ManutencoesList';
+import './App.css'
 
 function App() {
   return (
     <div className="App">
-      <h1>Sistema de Manutenções</h1>
       <ManutencoesList />
     </div>
   );

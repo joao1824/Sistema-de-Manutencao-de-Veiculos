@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './ManutencoesList.css'
 
 export default function ManutencoesList() {
   const [manutencoes, setManutencoes] = useState([]);
@@ -13,8 +14,8 @@ export default function ManutencoesList() {
 
 
   return (
-    <div>
-      <h2>Lista de Manutenções</h2>
+    <div id='crud'>
+      <h2 id='titulo'>Lista de Manutenções</h2>
       <table>
         <thead>
           <tr>
