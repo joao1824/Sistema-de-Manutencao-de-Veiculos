@@ -1,0 +1,70 @@
+#crud{
+    font-family: sans-serif;
+    background-color: rgba(255, 255, 255, 0.658);
+    margin-top: 5%;
+    width: 70%;
+    height: 70%;
+    max-height: 700px;
+    padding: 1%;
+    border-radius: 20px;
+    overflow-y: auto;
+}
+
+#cabecalho{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid black;
+}
+
+#btnAdicionar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 32px;
+    width: 32px;
+
+    background-color: #7893b9;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+
+    font-size: 24px;
+}
+
+#btnAdicionar:hover {
+    background-color: #5a6f9c;
+}
+
+#crud table {
+    background-color: rgba(102, 137, 182, 0.39);
+    width: 100%;
+}
+
+thead {
+    background-color: #7893b9; 
+    color: white;
+    height: 40px;
+}
+
+tbody {
+    text-align: center;
+    color: rgb(43, 43, 43);
+}
+
+tbody tr {
+    height: 30px;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #cfe1fd;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #eaf0fc;
+}
+
+tbody tr:hover {
+    background-color: #c3d1f1 !important;
+}
