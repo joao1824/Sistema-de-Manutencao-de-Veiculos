@@ -15,16 +15,17 @@ export default function ManutencoesList() {
     try {
         const response = await fetch(`http://localhost:3001/manutencoes/${id}`, { method: 'SELECT' });// procura o id da linha da tabela na url de manutencoes
         if (response.ok) { // se achar...
-          //criar div invisivel que depois chama função 
+          alert('Leitura feito com sucesso')
         } else {
           alert('Erro ao ler manutenção.');
-      } catch (err) {
+      } 
+    } catch (err) {
         alert('Erro no servidor.');
         console.log(err); // debug
       }
   }
 
-  const [lerManutencao, setLerManutencao] = useState(false);
+  const [readManutencao, setReadManutencao] = useState(false);
   
   const deletarManutencao = async (id) => {
     if (window.confirm('Tem certeza que deseja deletar esta manutenção?')) {
@@ -77,7 +78,7 @@ export default function ManutencoesList() {
               <td>
                 <img
                   src='https://img.icons8.com/?size=100&id=60022&format=png&color=5a6f9c'
-                  onClick={() => setLerManutencao(true)} /* ADICIONAR FUNCAO READ*/
+                  onClick={() => setReadManutencao(true)} /* ADICIONAR FUNCAO READ*/
                 />
               </td>
 
@@ -100,7 +101,7 @@ export default function ManutencoesList() {
         </tbody>
       </table>
 
-      {lerManutencao && (
+      {readManutencao && (
         <div className='testePopup'>
           <p>preencher como quiser!!</p>
         </div>
