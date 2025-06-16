@@ -15,13 +15,16 @@ export default function ManutencoesList() {
     try {
         const response = await fetch(`http://localhost:3001/manutencoes/${id}`, { method: 'SELECT' });// procura o id da linha da tabela na url de manutencoes
         if (response.ok) { // se achar...
-          
-        } 
+          //criar div invisivel que depois chama função 
+        } else {
+          alert('Erro ao ler manutenção.');
       } catch (err) {
         alert('Erro no servidor.');
         console.log(err); // debug
       }
   }
+
+  const [lerManutencao, setLerManutencao] = useState(false);
   
   const deletarManutencao = async (id) => {
     if (window.confirm('Tem certeza que deseja deletar esta manutenção?')) {
@@ -74,7 +77,7 @@ export default function ManutencoesList() {
               <td>
                 <img
                   src='https://img.icons8.com/?size=100&id=60022&format=png&color=5a6f9c'
-                  onClick={() => alert('Função read (a adicionar)')} /* ADICIONAR FUNCAO READ*/
+                  onClick={() => setLerManutencao(true) /* ADICIONAR FUNCAO READ*/
                 />
               </td>
 
@@ -96,6 +99,17 @@ export default function ManutencoesList() {
           ))}
         </tbody>
       </table>
+      {lerManutencao && (
+                <div className='popupOverlay'>
+                    <div className='popupBody'>
+                        <div className='divCabecalhoPopup'>
+                            <h2>Cadastrar cachorro</h2>
+                            <button className='botaoFecharPopup' onClick={() => setCaoAdd(false)}>×</button>
+                        </div>
+                        <form action='' className='addCachorro' onSubmit={aoSubmit}>
+                            <p>Nome:</p>
+                            <input type='text' name='nome' value={form.nome} onChange={alterarForm} required />
+                            <p>Idade
     </div>
   );
 }
