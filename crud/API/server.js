@@ -19,6 +19,7 @@ const dbConfig = {    // atenção aqui tem que ser igualzinho as config do serv
   }
 };
 
+// FUNÇÃO EXIBIR TABELA
 app.get('/manutencoes', async(req , res) => { // req e res vai set usado dependendo do metodo tipo post, put etc...
     try{ // tento 
         await sql.connect(dbConfig); /// aqui é espero conectar (await só pode ser usado quando tiver async logo acima)
@@ -30,8 +31,29 @@ app.get('/manutencoes', async(req , res) => { // req e res vai set usado depende
 })
 
 
+// FUNÇÃO CREATE
 // [...]
 
+
+// FUNÇÃO READ
+// [...]
+
+
+// FUNÇÃO UPDATE
+// [...]
+
+
+// FUNÇÃO DELETE
+app.delete('/manutencoes/:id', async (req, res) => {
+    try {
+        await sql.connect(dbConfig); // esperar conectar ao banco
+        const id = req.params.id; // ler parametro chave salvo no req da url
+        await sql.query`delete from manutencoes where cd_manutencao = ${id}`; // esperar para executar script com where na variavel dinamica (id)
+        res.json({ message: 'Manutenção deletada com sucesso!' });
+    } catch (err) {
+        res.status(500).send('Deu Ruim No SERVIDOR: ' + err.message);
+    }
+});
 
 // Iniciar o servidor na poprta 3001, senão der nessa porta tem que mudar, mas vai ter que mudar em ManutencoesList.jsx tambem
 app.listen(3001, () => { 

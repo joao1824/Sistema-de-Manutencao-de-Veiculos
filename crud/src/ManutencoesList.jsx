@@ -11,13 +11,30 @@ export default function ManutencoesList() {
       .catch(error => console.error('Erro ao buscar manutenções:', error));// aqui é se der erro apartir daqui dai ele da a mensahem
   }, []);
 
+  const deletarManutencao = async (id) => {
+    if (window.confirm('Tem certeza que deseja deletar esta manutenção?')) {
+      try {
+        const response = await fetch(`http://localhost:3001/manutencoes/${id}`, { method: 'DELETE' });// procura o id da linha da tabela na url de manutencoes
+        if (response.ok) { // se achar...
+          setManutencoes(manutencoes.filter(m => m.cd_manutencao !== id)); // filtra a manutencao deletada para fora do array de manutencoes
+          alert(`Manutenção n° ${id} deletada com sucesso!`);
+        } else {
+          alert('Erro ao deletar manutenção.');
+        }
+      } catch (err) {
+        alert('Erro no servidor.');
+        console.log(err); // debug
+      }
+    }
+  };
+
 
   return (
     <div id='crud'>
       
       <div id='cabecalho'>
         <h2>Lista de Manutenções</h2>
-        <span onClick={() => alert('Ainda não tenho uma função :(')} id='btnAdicionar'><b>+</b></span>
+        <span onClick={() => alert('Função create (a adicionar)')} id='btnAdicionar'><b>+</b></span> {/* ADICIONAR FUNCAO CREATE*/}
       </div>
       
       <table>
@@ -42,6 +59,28 @@ export default function ManutencoesList() {
               <td>{m.cd_alas}</td>
               <td>{m.vl_manutencao}</td>
               <td>{m.cd_status_manutencoes}</td>
+
+              <td>
+                <img
+                  src='https://img.icons8.com/?size=100&id=60022&format=png&color=5a6f9c'
+                  onClick={() => alert('Função read (a adicionar)')} /* ADICIONAR FUNCAO READ*/
+                />
+              </td>
+
+              <td>
+                <img
+                  src='https://img.icons8.com/?size=100&id=59856&format=png&color=5a6f9c'
+                  onClick={() => alert('Função update (a adicionar)')} /* ADICIONAR FUNCAO UPDATE*/
+                />
+              </td>
+
+              <td>
+                <img
+                    src='https://img.icons8.com/?size=100&id=68064&format=png&color=5a6f9c'
+                    onClick={() => deletarManutencao(m.cd_manutencao)}
+                  />
+              </td>
+
             </tr>
           ))}
         </tbody>

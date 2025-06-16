@@ -68,3 +68,14 @@ tbody tr:nth-child(even) {
 tbody tr:hover {
     background-color: #c3d1f1 !important;
 }
+
+td img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+td img:hover {
+    transform: scale(1.15);
+}
