@@ -1,14 +1,16 @@
-# Sistema de Manutenção de Veículos
-Projeto de Bando de Dados II <br>
-<b>Grupo D</b> <br><br>
+# Sistema de Manutenção de Veículos | Grupo D
+Este projeto consiste na elaboração de um modelo de banco de dados para um sistema hipotético de manutenção de veículos.
+<br>
+Utilizando SQLServer, em conjunto com o framework React e a ferramenta node.js, também foi elaborada uma aplicação do tipo CRUD
+capaz de modificar a tabela manutencoes conforme o desejo do usuário.
 
 
 ## Equipe
-- Bruno Pagani Rampinelli     - ``` NaoSouOBruno ```
-- Gabriel dos Reis Klein      - ```Gabriel-dos-Reis-Klein ```
-- Gabriel Tramontin Aguiar    - ``` GabrielTramontin ```
-- João Henrique Camilo Fogaça - ``` joao1824 ```
-- Yuri Cardoso Maciel         - ``` DoppelsoldnerHRE ```
+- Bruno Pagani Rampinelli     - ```NaoSouOBruno```
+- Gabriel dos Reis Klein      - ```Gabriel-dos-Reis-Klein```
+- Gabriel Tramontin Aguiar    - ```GabrielTramontin```
+- João Henrique Camilo Fogaça - ```joao1824```
+- Yuri Cardoso Maciel         - ```DoppelsoldnerHRE```
 
 
 ## Modelo Físico
