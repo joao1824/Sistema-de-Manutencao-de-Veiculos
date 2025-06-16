@@ -77,7 +77,7 @@ export default function ManutencoesList() {
               <td>
                 <img
                   src='https://img.icons8.com/?size=100&id=60022&format=png&color=5a6f9c'
-                  onClick={() => setLerManutencao(true) /* ADICIONAR FUNCAO READ*/
+                  onClick={() => setLerManutencao(true)} /* ADICIONAR FUNCAO READ*/
                 />
               </td>
 
@@ -99,17 +99,14 @@ export default function ManutencoesList() {
           ))}
         </tbody>
       </table>
+
       {lerManutencao && (
-                <div className='popupOverlay'>
-                    <div className='popupBody'>
-                        <div className='divCabecalhoPopup'>
-                            <h2>Cadastrar cachorro</h2>
-                            <button className='botaoFecharPopup' onClick={() => setCaoAdd(false)}>×</button>
-                        </div>
-                        <form action='' className='addCachorro' onSubmit={aoSubmit}>
-                            <p>Nome:</p>
-                            <input type='text' name='nome' value={form.nome} onChange={alterarForm} required />
-                            <p>Idade
+        <div className='testePopup'>
+          <p>preencher como quiser!!</p>
+        </div>
+        )
+      }
+      
     </div>
   );
 }
