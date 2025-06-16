@@ -35,8 +35,16 @@ app.get('/manutencoes', async(req , res) => { // req e res vai set usado depende
 // [...]
 
 
-// FUNÇÃO READ
-// [...]
+app.select('/manutencoes/:id', async (req, res) => {
+    try {
+        await sql.connect(dbConfig); // esperar conectar ao banco
+        const id = req.params.id; // ler parametro chave salvo no req da url
+        await sql.query`select * from manutencoes where cd_manutencao = ${id}`; // esperar para executar script com where na variavel dinamica (id)
+        res.json({ message: 'Manutenção Lida com sucesso!' });
+    } catch (err) {
+        res.status(500).send('Deu Ruim No SERVIDOR: ' + err.message);
+    }
+});
 
 
 // FUNÇÃO UPDATE
