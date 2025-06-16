@@ -26,12 +26,22 @@ As informações sobre as tabelas e seus respectivos índices estão no arquivo 
 
 
 ## Scripts SQL
-> A adicionar...
+O projeto utiliza o banco de dados fornecido pela [Azure](https://azure.microsoft.com/pt-br/products/azure-sql/database).<br>
+Para criar um banco de dados Azure, siga o [passo a passo](https://github.com/jlsilva01/sql-azure).<br><br>
 
+A seguir estão dispostos os scripts SQL, separados por tipo:
+- [Tabelas (DDL)](scripts/ddl/tabelas)
+- índices
+- Triggers
+- Stored Procedures
+- Funções
+- [DML](scripts/dml)
 
 ## CRUD
 ### Código Fonte
-> A adicionar...
+- HTML, CSS e JS
+- Framework React
+- Node.js (cliente MSSQL)
 
 ### Execução
 > A adicionar...
