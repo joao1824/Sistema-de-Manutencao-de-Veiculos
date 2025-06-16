@@ -11,6 +11,18 @@ export default function ManutencoesList() {
       .catch(error => console.error('Erro ao buscar manutenções:', error));// aqui é se der erro apartir daqui dai ele da a mensahem
   }, []);
 
+  const lerManutencao = async (id) => {
+    try {
+        const response = await fetch(`http://localhost:3001/manutencoes/${id}`, { method: 'SELECT' });// procura o id da linha da tabela na url de manutencoes
+        if (response.ok) { // se achar...
+          
+        } 
+      } catch (err) {
+        alert('Erro no servidor.');
+        console.log(err); // debug
+      }
+  }
+  
   const deletarManutencao = async (id) => {
     if (window.confirm('Tem certeza que deseja deletar esta manutenção?')) {
       try {
@@ -27,7 +39,6 @@ export default function ManutencoesList() {
       }
     }
   };
-
 
   return (
     <div id='crud'>
