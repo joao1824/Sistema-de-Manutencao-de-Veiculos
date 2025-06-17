@@ -34,7 +34,7 @@ app.get('/manutencoes', async(req , res) => { // req e res vai set usado depende
 // FUNÇÃO CREATE
 // [...]
 
-
+// FUNÇÃO READ
 app.select('/manutencoes/:id', async (req, res) => {
     try {
         await sql.connect(dbConfig); // esperar conectar ao banco
