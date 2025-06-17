@@ -11,11 +11,13 @@ export default function ManutencoesList() {
       .catch(error => console.error('Erro ao buscar manutenções:', error));// aqui é se der erro apartir daqui dai ele da a mensahem
   }, []);
 
+  const [readManutencao, setReadManutencao] = useState(false);
+  
   const lerManutencao = async (id) => {
     try {
         const response = await fetch(`http://localhost:3001/manutencoes/${id}`, { method: 'SELECT' });// procura o id da linha da tabela na url de manutencoes
         if (response.ok) { // se achar...
-          alert('Leitura feito com sucesso')
+          setReadManutencao(true)
         } else {
           alert('Erro ao ler manutenção.');
       } 
@@ -24,8 +26,6 @@ export default function ManutencoesList() {
         console.log(err); // debug
       }
   }
-
-  const [readManutencao, setReadManutencao] = useState(false);
   
   const deletarManutencao = async (id) => {
     if (window.confirm('Tem certeza que deseja deletar esta manutenção?')) {
@@ -78,7 +78,7 @@ export default function ManutencoesList() {
               <td>
                 <img
                   src='https://img.icons8.com/?size=100&id=60022&format=png&color=5a6f9c'
-                  onClick={() => setReadManutencao(true)} /* ADICIONAR FUNCAO READ*/
+                  onClick={() => setReadManutencao(true)} 
                 />
               </td>
 
@@ -103,7 +103,15 @@ export default function ManutencoesList() {
 
       {readManutencao && (
         <div className='testePopup'>
-          <p>preencher como quiser!!</p>
+          <h3>Detalhes da Manutenção</h3>
+          <p><b>Código:</b> {readManutencao.cd_manutencao}</p>
+          <p><b>Placa:</b> {readManutencao.placa}</p>
+          <p><b>Funcionário:</b> {readManutencao.cd_funcionario}</p>
+          <p><b>Tipo:</b> {readManutencao.cd_tipo}</p>
+          <p><b>Ala:</b> {readManutencao.cd_alas}</p>
+          <p><b>Valor:</b> {readManutencao.vl_manutencao}</p>
+          <p><b>Status:</b> {readManutencao.cd_status_manutencoes}</p>
+          <button onClick={() => setReadManutencao(false)}>Fechar</button>
         </div>
         )
       }
