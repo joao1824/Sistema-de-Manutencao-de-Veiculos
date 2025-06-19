@@ -55,7 +55,7 @@ go
 
 -- Tabela status_manutencoes
 create table status_manutencoes(
-	cd_status_manutencoes int not null primary key,
+	cd_status_manutencoes smallint not null primary key,
 	status varchar(40) not null check(status in ('Pronto', 'Em Andamento', 'Atrasado', 'Em espera de peças', 'Em espera de pagamento', 'Esperando o Seguro', 'Carro não veio', 'Em segundo Plano', 'Emergência', 'Sem espaço para armazenar'))
 )
 go
@@ -63,7 +63,7 @@ go
 
 -- Tabela alas
 create table alas(
-	cd_alas int not null primary key,
+	cd_alas smallint not null primary key,
 	ala varchar(50) not null,
 	descricao varchar(200) null
 )
@@ -135,13 +135,13 @@ go
 
 -- Tabela manutencoes
 create table manutencoes(
-	cd_manutencao int not null primary key,
+	cd_manutencao smallint not null primary key,
 	placa varchar(7) not null,
-	cd_funcionario int not null,
-	cd_tipo int not null,
-	cd_alas int not null,
+	cd_funcionario smallint not null,
+	cd_tipo smallint not null,
+	cd_alas smallint not null,
 	vl_manutencao numeric(5,2) null,
-	cd_status_manutencoes int not null,
+	cd_status_manutencoes smallint not null,
 	constraint fk_status_manutencao foreign key (cd_status_manutencoes)
 	references status_manutencoes(cd_status_manutencoes),
 	constraint fk_alas foreign key (cd_alas)
