@@ -36,13 +36,13 @@ Table seguros {
 }
 
 Table manutencoes {
-  cd_manutencao integer [primary key]
+  cd_manutencao smallint [primary key]
   placa varchar
-  cd_funcionario int
-  cd_tipo int
-  cd_alas int
-  vl_manutencao float(5,2)
-  cd_status_manutencao int
+  cd_funcionario smallint
+  cd_tipo smallint
+  cd_alas smallint
+  vl_manutencao numeric(5,2)
+  cd_status_manutencao smallint
 }
 
 Table tipos_manutencao {
@@ -63,7 +63,7 @@ Table agendamentos {
 }
 
 Table alas {
-  cd_alas integer [primary key]
+  cd_alas smallint [primary key]
   ala varchar
   descricao varchar
 }
@@ -86,7 +86,7 @@ Table status_agendamentos {
 }
 
 Table status_manutencoes {
-  cd_status_manutencoes int [primary key]
+  cd_status_manutencoes smallint [primary key]
   status varchar
 }
 
