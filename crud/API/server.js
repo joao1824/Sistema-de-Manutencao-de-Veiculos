@@ -32,7 +32,40 @@ app.get('/manutencoes', async(req , res) => { // req e res vai set usado depende
 
 
 // FUNÇÃO CREATE
-// [...]
+app.post('/manutencoes', async (req, res) => {
+  try {
+    await sql.connect(dbConfig);
+    const {
+      placa,
+      cd_funcionario,
+      cd_tipo,
+      cd_alas,
+      vl_manutencao,
+      cd_status_manutencoes
+    } = req.body;
+
+    const query = `
+      INSERT INTO manutencoes 
+        (placa, cd_funcionario, cd_tipo, cd_alas, vl_manutencao, cd_status_manutencoes)
+      VALUES 
+        (@placa, @cd_funcionario, @cd_tipo, @cd_alas, @vl_manutencao, @cd_status_manutencoes)
+    `;
+
+    const request = new sql.Request();
+    request.input('placa', sql.VarChar, placa);
+    request.input('cd_funcionario', sql.Int, cd_funcionario);
+    request.input('cd_tipo', sql.Int, cd_tipo);
+    request.input('cd_alas', sql.Int, cd_alas);
+    request.input('vl_manutencao', sql.Decimal(10, 2), vl_manutencao);
+    request.input('cd_status_manutencoes', sql.Int, cd_status_manutencoes);
+
+    await request.query(query);
+
+    res.status(201).json({ message: 'Manutenção adicionada com sucesso!' });
+  } catch (err) {
+    res.status(500).send('Erro ao adicionar manutenção: ' + err.message);
+  }
+});
 
 // FUNÇÃO READ
 app.select('/manutencoes/:id', async (req, res) => {

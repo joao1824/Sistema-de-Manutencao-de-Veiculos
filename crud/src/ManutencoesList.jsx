@@ -47,11 +47,22 @@ export default function ManutencoesList() {
   return (
     <div id='crud'>
       
-      <div id='cabecalho'>
+       <div id='cabecalho'>
         <h2>Lista de Manutenções</h2>
-        <span onClick={() => alert('Função create (a adicionar)')} id='btnAdicionar'><b>+</b></span> {/* ADICIONAR FUNCAO CREATE*/}
+        <span onClick={() => setMostrarFormulario(!mostrarFormulario)} id='btnAdicionar'><b>+</b></span>
       </div>
-      
+
+      {mostrarFormulario && (
+        <form onSubmit={criarManutencao} style={{ margin: '20px 0' }}>
+          <input placeholder="Placa" value={novaManutencao.placa} onChange={(e) => setNovaManutencao({ ...novaManutencao, placa: e.target.value })} required />
+          <input placeholder="Funcionário" value={novaManutencao.cd_funcionario} onChange={(e) => setNovaManutencao({ ...novaManutencao, cd_funcionario: e.target.value })} required />
+          <input placeholder="Tipo" value={novaManutencao.cd_tipo} onChange={(e) => setNovaManutencao({ ...novaManutencao, cd_tipo: e.target.value })} required />
+          <input placeholder="Ala" value={novaManutencao.cd_alas} onChange={(e) => setNovaManutencao({ ...novaManutencao, cd_alas: e.target.value })} required />
+          <input placeholder="Valor" type="number" value={novaManutencao.vl_manutencao} onChange={(e) => setNovaManutencao({ ...novaManutencao, vl_manutencao: e.target.value })} required />
+          <input placeholder="Status" value={novaManutencao.cd_status_manutencoes} onChange={(e) => setNovaManutencao({ ...novaManutencao, cd_status_manutencoes: e.target.value })} required />
+          <button type="submit">Salvar</button>
+        </form>
+      )}
       <table>
         <thead>
           <tr>
