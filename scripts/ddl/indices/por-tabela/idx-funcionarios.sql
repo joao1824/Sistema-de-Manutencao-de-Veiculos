@@ -1,0 +1,2 @@
+create nonclustered index idx_funcionarios_cd_status on funcionarios(cd_status_funcionario)
+go

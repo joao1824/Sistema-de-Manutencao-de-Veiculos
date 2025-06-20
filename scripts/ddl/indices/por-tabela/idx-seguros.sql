@@ -1,0 +1,2 @@
+create nonclustered index idx_seguros_cd_status on seguros(cd_status_seguros)
+go
