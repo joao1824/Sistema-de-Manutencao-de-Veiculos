@@ -12,7 +12,7 @@ const dbConfig = {    // atenção aqui tem que ser igualzinho as config do serv
   user: 'admin_user',  // essas config fui eu que usei, se quiser pofe replicar dai não precisar alterar aqui (eu usei o azure mas pode ser usado o local só que ainda não tentei)
   password: 'satc123!',
   server: 'crud-server-satc.database.windows.net',
-  database: 'crud',
+  database: 'sistema_manutencao_veiculos',
   options: {
     encrypt: true, //precisa disso se for fazer no azure
     trustServerCertificate: true //precisa disso se for fazer no azure

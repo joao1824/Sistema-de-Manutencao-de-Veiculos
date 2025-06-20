@@ -1,10 +1,10 @@
 /* -- SCRIPT PARA CRIAÇÃO DE TODAS AS TABELAS -- */
 
--- create database sistema_manutencao_veiculos
--- go
+create database sistema_manutencao_veiculos
+go
 
 
-use crud
+use sistema_manutencao_veiculos
 go
 
 
