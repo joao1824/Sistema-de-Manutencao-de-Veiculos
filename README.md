@@ -31,10 +31,10 @@ Para criar um banco de dados Azure, siga o [passo a passo](https://github.com/jl
 
 A seguir estão dispostos os scripts SQL, separados por tipo:
 - [Tabelas (DDL)](scripts/ddl/tabelas)
-- índices
+- [Índices](scripts/ddl/indices)
 - Triggers
 - Stored Procedures
-- Funções
+- [Funções](scripts/ddl/funcoes)
 - [DML](scripts/dml)
 
 ## CRUD
