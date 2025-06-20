@@ -1,4 +1,3 @@
-create nonclustered index idx_manutencoes_cd_manutencao on manutencoes(cd_manutencao)
 create nonclustered index idx_manutencoes_placa on manutencoes(placa)
 create nonclustered index idx_manutencoes_cd_funcionario on manutencoes(cd_funcionario)
 create nonclustered index idx_manutencoes_vl_manutencao on manutencoes(vl_manutencao)
