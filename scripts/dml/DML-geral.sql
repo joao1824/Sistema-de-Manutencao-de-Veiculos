@@ -1,6 +1,6 @@
 /* -- SCRIPT PARA INSERÇÃO EM TODAS AS TABELAS -- */
 
-use crud
+use sistema_manutencao_veiculos
 go
 
 
