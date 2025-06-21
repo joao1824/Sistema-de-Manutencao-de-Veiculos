@@ -68,7 +68,7 @@ app.post('/manutencoes', async (req, res) => {
 });
 
 // FUNÇÃO READ
-app.select('/manutencoes/:id', async (req, res) => {
+app.get('/manutencoes/:id', async (req, res) => {
     try {
         await sql.connect(dbConfig); // esperar conectar ao banco
         const id = req.params.id; // ler parametro chave salvo no req da url

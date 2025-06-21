@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './ManutencoesList.css'
 
 export default function ManutencoesList() {
+
   const [manutencoes, setManutencoes] = useState([]);
 
   useEffect(() => {
@@ -11,7 +12,7 @@ export default function ManutencoesList() {
       .catch(error => console.error('Erro ao buscar manutenções:', error));// aqui é se der erro apartir daqui dai ele da a mensahem
   }, []);
 
-  const [readManutencao, setReadManutencao] = useState(null);
+  const [readManutencao, setReadManutencao] = useState(null); // variavel que controla se o popup estará aberto (true) ou fechado (false), por padrão está fechado
   
   const lerManutencao = async (id) => {
     try {
@@ -114,7 +115,8 @@ export default function ManutencoesList() {
       </table>
 
       {readManutencao && (
-        <div className='testePopup'>
+        <div className='popupOverlay'> {/* essa div é o fundo escuro que fica atras do popup */}
+          <div className='popupBody'> {/* essa div é o popup em si */}
           <h3>Detalhes da Manutenção</h3>
           <p><b>Código:</b> {readManutencao.cd_manutencao}</p>
           <p><b>Placa:</b> {readManutencao.placa}</p>
@@ -124,11 +126,14 @@ export default function ManutencoesList() {
           <p><b>Valor:</b> {readManutencao.vl_manutencao}</p>
           <p><b>Status:</b> {readManutencao.cd_status_manutencoes}</p>
           <button onClick={() => setReadManutencao(null)}>Fechar</button>
+          </div>
         </div>
         )
-      }
+      },
       
     </div>
+
+    
   );
 }
 
