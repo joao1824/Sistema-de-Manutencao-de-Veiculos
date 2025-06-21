@@ -24,3 +24,4 @@ create or alter procedure pr_VerificaSeguro as
         seguros ON veiculos.cd_seguro = seguros.cd_seguro
     WHERE
         manutencoes.cd_status_manutencoes = 6
+END
