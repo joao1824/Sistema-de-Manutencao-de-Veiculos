@@ -15,8 +15,8 @@ create nonclustered index idx_status_seguros_status on status_seguros(status)
 
 create nonclustered index idx_clientes_nm_cliente on clientes(nm_cliente)
 
-create index idx_func_fn_porcentagem_media on funcionarios (cd_funcionario) include (data_entrada)
-create index idx_func_relatorio_top3 on funcionarios (cd_funcionario, cd_status_funcionario) include (nm_funcionario, data_entrada);
-create index idx_manut_relatorio_top3 on manutencoes(cd_funcionario) include (vl_manutencao);
+create nonclustered index idx_func_fn_porcentagem_media on funcionarios (cd_funcionario) include (data_entrada)
+create nonclustered index idx_func_relatorio_top3 on funcionarios (cd_funcionario, cd_status_funcionario) include (nm_funcionario);
+create nonclustered index idx_manut_relatorio_top3 on manutencoes(cd_funcionario) include (vl_manutencao);
 
 go
