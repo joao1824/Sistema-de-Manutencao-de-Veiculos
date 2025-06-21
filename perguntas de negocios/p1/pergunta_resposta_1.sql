@@ -1,11 +1,11 @@
 -- Pergunta
 
--- Quais os três clientes com o maior custo total de manutenções que foram
--- realizadas nos últimos 12 meses, por funcionários ativos, e em veículos com seguro ativo?
--- Na tabela resultado, para cada um desses três clientes, deve-se mostrar o nome completo, total gasto,
+-- Quais os três clientes com o maior custo total de manutenções que foram realizadas nos últimos 12 meses,
+-- por funcionários ativos, e em veículos com seguro ativo?
+-- Na tabela resultado, para cada um desses três clientes, mostrar o nome completo, total gasto,
 -- o número total de manutenções realizadas, e a média de valor dessas manutenções.
--- Além disso, será atribuído a cada um desses clientes um ranking de fidelidade. Deve-se definir e exibir o status de fidelidade do cliente (Ouro, Prata ou Bronze) 
--- baseando-se na soma total de seus gastos com manutenções (>= R$ 1000 = Ouro | >= R$ 500 e < R$ 1000 = Prata | < R$ 500 = Bronze).
+-- Além disso, atribuir a cada cliente um ranking de fidelidade (Ouro, Prata ou Bronze) baseando-se na soma
+-- total de seus gastos com manutenções.
 
 
 -- Resposta
