@@ -2,22 +2,22 @@
 
 Table veiculos {
   placa varchar [primary key]
-  cd_cliente integer
+  cd_cliente int
   marca varchar
   modelo varchar
-  ano int(4)
-  cd_seguro integer
+  ano smallint
+  cd_seguro int
 }
 
 Table clientes {
-  cd_cliente integer [primary key]
+  cd_cliente int [primary key]
   nm_cliente varchar
   cpf varchar
   telefone varchar
 }
 
 Table funcionarios {
-  cd_funcionario integer [primary key]
+  cd_funcionario int [primary key]
   nm_funcionario varchar
   cpf varchar
   telefone varchar
@@ -25,45 +25,43 @@ Table funcionarios {
   data_entrada date
   data_saida date
   sexo char(1)
-  cd_status_funcionario int
+  cd_status_funcionario tinyint
 }
 
 Table seguros {
-  cd_seguro integer [primary key]
+  cd_seguro int [primary key]
   nm_seguradora varchar
-  status int
-  cd_status_seguros int
+  cd_status_seguros tinyint
 }
 
 Table manutencoes {
-  cd_manutencao smallint [primary key]
+  cd_manutencao int [primary key]
   placa varchar
-  cd_funcionario smallint
+  cd_funcionario int
   cd_tipo smallint
-  cd_alas smallint
+  cd_alas tinyint
   vl_manutencao numeric(5,2)
-  cd_status_manutencao smallint
+  cd_status_manutencao tinyint
 }
 
 Table tipos_manutencao {
-  cd_tipo integer [primary key]
+  cd_tipo smallint [primary key]
   descricao varchar
-
 }
 
 Table agendamentos {
-  cd_agenda integer [primary key]
+  cd_agenda int [primary key]
   data_contatada date
   data_agendada date
   horario_agendado time
   cd_funcionario int
   placa varchar
-  cd_tipo int
-  cd_status_agendamento int
+  cd_tipo smallint
+  cd_status_agendamento tinyint
 }
 
 Table alas {
-  cd_alas smallint [primary key]
+  cd_alas tinyint [primary key]
   ala varchar
   descricao varchar
 }
@@ -71,24 +69,26 @@ Table alas {
 // TABELAS STATUS
 
 Table status_seguros {
-  cd_status_seguros int [primary key]
+  cd_status_seguros tinyint [primary key]
   status varchar
 }
 
 Table status_funcionarios {
-  cd_status_funcionarios int [primary key]
+  cd_status_funcionarios tinyint [primary key]
   status varchar
 }
 
 Table status_agendamentos {
-  cd_status_agendamentos int [primary key]
+  cd_status_agendamentos tinyint [primary key]
   status varchar
 }
 
 Table status_manutencoes {
-  cd_status_manutencoes smallint [primary key]
+  cd_status_manutencoes tinyint [primary key]
   status varchar
 }
+
+// RELACOES
 
 Ref: seguros.cd_seguro < veiculos.cd_seguro
 
