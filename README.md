@@ -33,7 +33,7 @@ A seguir estão dispostos os scripts SQL, separados por tipo:
 - [Tabelas (DDL)](scripts/ddl/tabelas)
 - [Índices](scripts/ddl/indices)
 - Triggers
-- Stored Procedures
+- [Stored Procedures](scripts/ddl/procedures)
 - [Funções](scripts/ddl/funcoes)
 - [DML](scripts/dml)
 
