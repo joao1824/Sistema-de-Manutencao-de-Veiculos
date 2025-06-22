@@ -6,7 +6,6 @@ const app = express(); // coloco o express com função em app para eu poder usa
 app.use(cors()); //para coneguir requisição de outro dominio
 app.use(express.json()); //para conseguir ler em JSON
 
-
 // configurar conexão com SQL Server (local ou Azure)
 const dbConfig = {    // atenção aqui tem que ser igualzinho as config do servidor se não não funfa
   user: 'admin_user',  // essas config fui eu que usei, se quiser pofe replicar dai não precisar alterar aqui (eu usei o azure mas pode ser usado o local só que ainda não tentei)
@@ -68,15 +67,19 @@ app.post('/manutencoes', async (req, res) => {
 });
 
 // FUNÇÃO READ
-app.get('/manutencoes/:id', async (req, res) => {
-    try {
-        await sql.connect(dbConfig); // esperar conectar ao banco
-        const id = req.params.id; // ler parametro chave salvo no req da url
-        await sql.query`select * from manutencoes where cd_manutencao = ${id}`; // esperar para executar script com where na variavel dinamica (id)
-        res.json({ message: 'Manutenção Lida com sucesso!' });
-    } catch (err) {
-        res.status(500).send('Deu Ruim No SERVIDOR: ' + err.message);
+app.get('/manutencoes/:id', async (req, res) => {  
+  try {
+    await sql.connect(dbConfig);
+    const id = req.params.id; // declarar id como parametro vindo do req da url
+    const resultado = await sql.query(`SELECT * FROM manutencoes WHERE cd_manutencao = ${id}`); // antes tava db.query, o correto é sql.query
+    if (resultado.recordset.length === 0) { // recordset serve pra acessar resultado de consultas sql
+      return res.status(404).json({ message: 'Manutenção não encontrada.' });
     }
+    return res.json(resultado.recordset[0]);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Erro ao buscar manutenção.' });
+  }
 });
 
 
