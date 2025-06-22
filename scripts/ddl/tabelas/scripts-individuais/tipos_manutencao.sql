@@ -3,7 +3,7 @@
 /*==============================================================*/
 
 create table tipos_manutencao(
-	cd_tipo int not null primary key,
+	cd_tipo smallint not null primary key,
 	descricao varchar(50) not null
 )
 go
