@@ -9,10 +9,10 @@ create table veiculos(
 	cd_cliente int not null,
 	marca varchar(20) not null,
 	modelo varchar(20) not null,
-	ano int not null,
+	ano smallint not null,
 	cd_seguro int not null,
 	constraint fk_cliente foreign key (cd_cliente)
-	references cliente(cd_cliente),
+	references clientes(cd_cliente),
 	constraint fk_seguro foreign key (cd_seguro)
 	references seguros(cd_seguro)
 )
