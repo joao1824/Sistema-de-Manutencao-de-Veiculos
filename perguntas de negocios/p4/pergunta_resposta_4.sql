@@ -13,7 +13,7 @@ create or alter procedure pr_VerificaSeguro as
             ELSE 'Desconhecido'
         END AS StatusSeguradora,
         CASE 
-            WHEN seguros.cd_status_seguros = 2 THEN CAST(manutencoes.vl_manutencao * 1.15)
+            WHEN seguros.cd_status_seguros = 2 THEN CAST(manutencoes.vl_manutencao * 1.15 as numeric(5,2))
             ELSE manutencoes.vl_manutencao
         END AS ValorManutencao
     FROM
@@ -24,4 +24,4 @@ create or alter procedure pr_VerificaSeguro as
         seguros ON veiculos.cd_seguro = seguros.cd_seguro
     WHERE
         manutencoes.cd_status_manutencoes = 6
-END
+end
