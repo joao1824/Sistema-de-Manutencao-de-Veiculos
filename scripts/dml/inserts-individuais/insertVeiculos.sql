@@ -10,4 +10,3 @@ insert into veiculos (placa, cd_cliente, marca, modelo, ano, cd_seguro)
 		     ('FSZ7576', 9, 'Nissan', 'XTerra', 2023, 9),
 		     ('ADH2381', 10, 'Honda', 'Accord', 2018, 10)
 
-create [nonclustered] index Idx_seguros_placa on veiculos (placa)
