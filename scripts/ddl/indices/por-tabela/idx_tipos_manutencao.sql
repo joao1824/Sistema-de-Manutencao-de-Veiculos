@@ -1,2 +1,3 @@
 create nonclustered index idx_tipos_manutencao_cd_tipo on tipos_manutencao(cd_tipo)
 create nonclustered index idx_tipos_manutencao_descricao on tipos_manutencao(descricao)
+go
