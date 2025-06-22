@@ -3,7 +3,7 @@
 /*==============================================================*/
 
 create table manutencoes(
-	cd_manutencao int identity not null primary key,
+	cd_manutencao int identity(1,1) not null primary key,
 	placa varchar(7) not null,
 	cd_funcionario int not null,
 	cd_tipo smallint not null,
