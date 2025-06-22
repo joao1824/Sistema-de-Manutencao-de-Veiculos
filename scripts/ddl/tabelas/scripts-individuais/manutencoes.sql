@@ -8,7 +8,7 @@ create table manutencoes(
 	cd_funcionario int not null,
 	cd_tipo smallint not null,
 	cd_alas tinyint not null,
-	vl_manutencao numeric(5,2) null,
+	vl_manutencao numeric(7,2) null,
 	cd_status_manutencoes tinyint not null,
 	constraint fk_status_manutencao foreign key (cd_status_manutencoes)
 	references status_manutencoes(cd_status_manutencoes),
