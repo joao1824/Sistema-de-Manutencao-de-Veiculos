@@ -5,8 +5,9 @@
 
 
 create table alas(
-	cd_alas int not null primary key,
-	ala varchar(20) not null,
-	descricao varchar(100) null
+	cd_alas tinyint not null primary key,
+	ala varchar(50) not null,
+	descricao varchar(200) null
 )
 go
+
