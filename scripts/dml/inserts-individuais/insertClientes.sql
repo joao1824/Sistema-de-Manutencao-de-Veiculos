@@ -10,5 +10,3 @@ insert into clientes (cd_cliente, nm_cliente, cpf, telefone)
        		     (9, 'Vitoria Pereira Dias', '83681483086', '4439490267'),
        		     (10, 'José Pereira Martins', '59231115006', '4525104608')
 
-create [nonclustered] index Idx_clientes_nm_cliente on clientes (nm_cliente)
-create unique [nonclustered] index Idx_clientes_cpf on clientes (cpf)

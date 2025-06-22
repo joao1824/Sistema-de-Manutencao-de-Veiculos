@@ -6,7 +6,7 @@
 
 
 create table status_manutencoes(
-	cd_status_manutencoes int not null primary key,
-	status varchar(20) not null check(status in ('Em progresso','Conclu�da','Cancelada'))
+	cd_status_manutencoes tinyint not null primary key,
+	status varchar(40) not null check(status in ('Pronto', 'Em Andamento', 'Atrasado', 'Em espera de peças', 'Em espera de pagamento', 'Esperando o Seguro', 'Carro não veio', 'Em segundo Plano', 'Emergência', 'Sem espaço para armazenar'))
 )
 go

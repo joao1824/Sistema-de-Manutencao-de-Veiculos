@@ -2,67 +2,186 @@ import React, { useEffect, useState } from 'react';
 import './ManutencoesList.css'
 
 export default function ManutencoesList() {
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [novaManutencao, setNovaManutencao] = useState({
+    placa: '',
+    cd_funcionario: '',
+    cd_tipo: '',
+    cd_alas: '',
+    vl_manutencao: '',
+    cd_status_manutencoes: ''
+  });
   const [manutencoes, setManutencoes] = useState([]);
+  const [manutencaoEdicao, setManutencaoEdicao] = useState(null); // Adicionado para o UPDATE
 
   useEffect(() => {
-    fetch('http://localhost:3001/manutencoes')  //busco na url (o servidor tem que estar iniciado)
-      .then(response => response.json()) // ele pega as resposta do servidor (aquele res.json(resultado.recordset)) os res é response, aqui não preciso especificar que o metodo é get mas nois outros precisa
-      .then(data => setManutencoes(data)) // ele pega os ddos e set em manutencoes que foi declarado logo acima
-      .catch(error => console.error('Erro ao buscar manutenções:', error));// aqui é se der erro apartir daqui dai ele da a mensahem
+    fetch('http://localhost:3001/manutencoes')
+      .then(response => response.json())
+      .then(data => setManutencoes(data))
+      .catch(error => console.error('Erro ao buscar manutenções:', error));
   }, []);
 
-  const [readManutencao, setReadManutencao] = useState(false);
-  
+  const [isPopupAberto, setIsPopupAberto] = useState(false);
+  const [dadosManutencao, setDadosManutencao] = useState(null);
+
+  // Função de UPDATE transferida do original
+  const editarManutencao = (manutencao) => {
+    setManutencaoEdicao(manutencao);
+  };
+
   const lerManutencao = async (id) => {
     try {
-        const response = await fetch(`http://localhost:3001/manutencoes/${id}`, { method: 'SELECT' });// procura o id da linha da tabela na url de manutencoes
-        if (response.ok) { // se achar...
-          setReadManutencao(true)
-        } else {
-          alert('Erro ao ler manutenção.');
-      } 
+        const response = await fetch(`http://localhost:3001/manutencoes/${id}`);
+        console.log('Resposta bruta:', response);
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Dados recebidos:', data);
+          setDadosManutencao(data);
+          setIsPopupAberto(true);
+    } else {
+      const erro = await response.json();
+      console.error('Erro do servidor:', erro);
+      alert('Erro ao ler manutenção.');
+    }
     } catch (err) {
-        alert('Erro no servidor.');
-        console.log(err); // debug
+        alert('Erro no servidor:' + err.message);
+        console.log(err);
       }
   }
   
   const deletarManutencao = async (id) => {
     if (window.confirm('Tem certeza que deseja deletar esta manutenção?')) {
       try {
-        const response = await fetch(`http://localhost:3001/manutencoes/${id}`, { method: 'DELETE' });// procura o id da linha da tabela na url de manutencoes
-        if (response.ok) { // se achar...
-          setManutencoes(manutencoes.filter(m => m.cd_manutencao !== id)); // filtra a manutencao deletada para fora do array de manutencoes
+        const response = await fetch(`http://localhost:3001/manutencoes/${id}`, { method: 'DELETE' });
+        if (response.ok) {
+          setManutencoes(manutencoes.filter(m => m.cd_manutencao !== id));
           alert(`Manutenção n° ${id} deletada com sucesso!`);
         } else {
           alert('Erro ao deletar manutenção.');
         }
       } catch (err) {
         alert('Erro no servidor.');
-        console.log(err); // debug
+        console.log(err);
       }
     }
   };
 
+  console.log('Conteúdo da manutenção:', dadosManutencao);
+
+
   return (
     <div id='crud'>
-      
-       <div id='cabecalho'>
+      <div id='cabecalho'>
         <h2>Lista de Manutenções</h2>
         <span onClick={() => setMostrarFormulario(!mostrarFormulario)} id='btnAdicionar'><b>+</b></span>
       </div>
 
       {mostrarFormulario && (
-        <form onSubmit={criarManutencao} style={{ margin: '20px 0' }}>
-          <input placeholder="Placa" value={novaManutencao.placa} onChange={(e) => setNovaManutencao({ ...novaManutencao, placa: e.target.value })} required />
-          <input placeholder="Funcionário" value={novaManutencao.cd_funcionario} onChange={(e) => setNovaManutencao({ ...novaManutencao, cd_funcionario: e.target.value })} required />
-          <input placeholder="Tipo" value={novaManutencao.cd_tipo} onChange={(e) => setNovaManutencao({ ...novaManutencao, cd_tipo: e.target.value })} required />
-          <input placeholder="Ala" value={novaManutencao.cd_alas} onChange={(e) => setNovaManutencao({ ...novaManutencao, cd_alas: e.target.value })} required />
-          <input placeholder="Valor" type="number" value={novaManutencao.vl_manutencao} onChange={(e) => setNovaManutencao({ ...novaManutencao, vl_manutencao: e.target.value })} required />
-          <input placeholder="Status" value={novaManutencao.cd_status_manutencoes} onChange={(e) => setNovaManutencao({ ...novaManutencao, cd_status_manutencoes: e.target.value })} required />
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            try {
+              const response = await fetch('http://localhost:3001/manutencoes', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(novaManutencao),
+              });
+              if (response.ok) {
+                alert('Manutenção criada com sucesso!');
+                setNovaManutencao({
+                  placa: '',
+                  cd_funcionario: '',
+                  cd_tipo: '',
+                  cd_alas: '',
+                  vl_manutencao: '',
+                  cd_status_manutencoes: ''
+                });
+                setMostrarFormulario(false);
+                const listaAtualizada = await fetch('http://localhost:3001/manutencoes');
+                const data = await listaAtualizada.json();
+                setManutencoes(data);
+              } else {
+                alert('Erro ao criar manutenção');
+              }
+            } catch (err) {
+              alert('Erro no servidor');
+              console.error(err);
+            }
+          }}
+          style={{ marginTop: '20px', background: '#f9f9f9', padding: '10px', borderRadius: '5px' }}
+        >
+          {Object.entries(novaManutencao).map(([campo, valor]) => (
+            <input
+              key={campo}
+              placeholder={campo}
+              value={valor}
+              onChange={(e) => setNovaManutencao({ ...novaManutencao, [campo]: e.target.value })}
+              required
+              style={{ margin: '5px' }}
+            />
+          ))}
           <button type="submit">Salvar</button>
         </form>
       )}
+
+      {/* Formulário de UPDATE transferido do original */}
+      {manutencaoEdicao && (
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            try {
+              const manutencaoAtualizada = {
+                ...manutencaoEdicao,
+                vl_manutencao: parseFloat(manutencaoEdicao.vl_manutencao),
+                cd_funcionario: parseInt(manutencaoEdicao.cd_funcionario),
+                cd_tipo: parseInt(manutencaoEdicao.cd_tipo),
+                cd_alas: parseInt(manutencaoEdicao.cd_alas),
+                cd_status_manutencoes: parseInt(manutencaoEdicao.cd_status_manutencoes),
+              };
+
+              const response = await fetch(`http://localhost:3001/manutencoes/${manutencaoAtualizada.cd_manutencao}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(manutencaoAtualizada),
+              });
+
+              if (response.ok) {
+                alert('Manutenção atualizada com sucesso!');
+                setManutencaoEdicao(null);
+                const listaAtualizada = await fetch('http://localhost:3001/manutencoes');
+                const data = await listaAtualizada.json();
+                setManutencoes(data);
+              } else {
+                const erro = await response.text();
+                console.error('Erro no update:', erro);
+                alert('Erro ao atualizar manutenção');
+              }
+            } catch (err) {
+              alert('Erro no servidor');
+              console.error(err);
+            }
+          }}
+          style={{ marginTop: '20px', background: '#f1f1f1', padding: '10px', borderRadius: '5px' }}
+        >
+          {Object.entries(manutencaoEdicao).map(([campo, valor]) =>
+            campo !== 'cd_manutencao' && (
+              <input
+                key={campo}
+                placeholder={campo}
+                value={valor}
+                onChange={(e) =>
+                  setManutencaoEdicao({ ...manutencaoEdicao, [campo]: e.target.value })
+                }
+                required
+                style={{ margin: '5px' }}
+              />
+            )
+          )}
+          <button type="submit">Salvar Alterações</button>
+          <button type="button" onClick={() => setManutencaoEdicao(null)}>Cancelar</button>
+        </form>
+      )}
+
       <table>
         <thead>
           <tr>
@@ -76,7 +195,7 @@ export default function ManutencoesList() {
           </tr>
         </thead>
         <tbody>
-           {manutencoes.map(m => (  // aqui só represento por meio de um .map padrão
+           {manutencoes.map(m => (
             <tr key={m.cd_manutencao}>
               <td><b>{m.cd_manutencao}</b></td>
               <td>{m.placa}</td>
@@ -89,14 +208,14 @@ export default function ManutencoesList() {
               <td>
                 <img
                   src='https://img.icons8.com/?size=100&id=60022&format=png&color=5a6f9c'
-                  onClick={() => setReadManutencao(true)} 
+                  onClick={() => lerManutencao(m.cd_manutencao)} 
                 />
               </td>
 
               <td>
                 <img
                   src='https://img.icons8.com/?size=100&id=59856&format=png&color=5a6f9c'
-                  onClick={() => alert('Função update (a adicionar)')} /* ADICIONAR FUNCAO UPDATE*/
+                  onClick={() => editarManutencao(m)} // Atualizado para chamar a função correta
                 />
               </td>
 
@@ -106,28 +225,26 @@ export default function ManutencoesList() {
                     onClick={() => deletarManutencao(m.cd_manutencao)}
                   />
               </td>
-
             </tr>
           ))}
         </tbody>
       </table>
 
-      {readManutencao && (
-        <div className='testePopup'>
-          <h3>Detalhes da Manutenção</h3>
-          <p><b>Código:</b> {readManutencao.cd_manutencao}</p>
-          <p><b>Placa:</b> {readManutencao.placa}</p>
-          <p><b>Funcionário:</b> {readManutencao.cd_funcionario}</p>
-          <p><b>Tipo:</b> {readManutencao.cd_tipo}</p>
-          <p><b>Ala:</b> {readManutencao.cd_alas}</p>
-          <p><b>Valor:</b> {readManutencao.vl_manutencao}</p>
-          <p><b>Status:</b> {readManutencao.cd_status_manutencoes}</p>
-          <button onClick={() => setReadManutencao(false)}>Fechar</button>
+      {isPopupAberto && dadosManutencao && (
+        <div className='popupOverlay'>
+          <div className='popupBody'>
+            <h3>Detalhes da Manutenção</h3>
+            <p><b>Código:</b> {dadosManutencao.cd_manutencao}</p>
+            <p><b>Placa:</b> {dadosManutencao.placa}</p>
+            <p><b>Funcionário:</b> {dadosManutencao.cd_funcionario}</p>
+            <p><b>Tipo:</b> {dadosManutencao.cd_tipo}</p>
+            <p><b>Ala:</b> {dadosManutencao.cd_alas}</p>
+            <p><b>Valor:</b> {dadosManutencao.vl_manutencao}</p>
+            <p><b>Status:</b> {dadosManutencao.cd_status_manutencoes}</p>
+            <button onClick={() => setIsPopupAberto(false)}>Fechar</button>
+          </div>
         </div>
-        )
-      }
-      
+      )}
     </div>
   );
 }
-

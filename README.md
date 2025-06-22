@@ -32,7 +32,7 @@ Para criar um banco de dados Azure, siga o [passo a passo](https://github.com/jl
 A seguir estão dispostos os scripts SQL, separados por tipo:
 - [Tabelas (DDL)](scripts/ddl/tabelas)
 - [Índices](scripts/ddl/indices)
-- Triggers
+- [Triggers](scripts/ddl/triggers)
 - [Stored Procedures](scripts/ddl/procedures)
 - [Funções](scripts/ddl/funcoes)
 - [DML](scripts/dml)
@@ -44,12 +44,29 @@ A seguir estão dispostos os scripts SQL, separados por tipo:
 - Node.js (cliente MSSQL)
 
 ### Execução
-> A adicionar...
-
+1. Com o banco de dados Azure criado (passo a passo disponível na seção Scripts SQL), acessar a pasta raiz do projeto.
+   
+2. Garantir que, no arquivo [server.js](crud/API/server.js), as variáveis ```user```, ```password```, ```server``` e ```database``` correspondem aos atributos do banco de dados criado.
+   
+3. No diretório raiz, abrir um primeiro terminal e executar o seguinte comando:
+    ```
+    cd crud/API; npm install; npm init -y; node server.js
+    ```
+  
+4. Com o primeiro terminal ainda rodando, abrir um segundo terminal, também no diretório raiz do programa, e executar o seguinte comando:
+   ```
+   cd crud; npm install; npm run dev
+   ```
+  
+5. Acessar o link apresentado no terminal.
 
 ## Relatório Final
 > A adicionar...
 
 
 ## Referências
-> A adicionar...
+### Websites
+- Tags React e CRUD nos fóruns [StackOverflow](https://stackoverflow.com/search?q=react+crud)
+- Exemplos de React Hooks em [W3School](https://www.w3schools.com/react/react_hooks.asp)
+### Vídeos
+- Montagem de CRUD em React https://www.youtube.com/watch?v=9pBdDVRmC2s
