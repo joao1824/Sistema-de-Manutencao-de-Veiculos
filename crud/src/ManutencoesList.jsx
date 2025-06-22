@@ -12,26 +12,32 @@ export default function ManutencoesList() {
     cd_status_manutencoes: ''
   });
   const [manutencoes, setManutencoes] = useState([]);
+  const [manutencaoEdicao, setManutencaoEdicao] = useState(null); // Adicionado para o UPDATE
 
   useEffect(() => {
-    fetch('http://localhost:3001/manutencoes')  //busco na url (o servidor tem que estar iniciado)
-      .then(response => response.json()) // ele pega as resposta do servidor (aquele res.json(resultado.recordset)) os res é response, aqui não preciso especificar que o metodo é get mas nois outros precisa
-      .then(data => setManutencoes(data)) // ele pega os ddos e set em manutencoes que foi declarado logo acima
-      .catch(error => console.error('Erro ao buscar manutenções:', error));// aqui é se der erro apartir daqui dai ele da a mensahem
+    fetch('http://localhost:3001/manutencoes')
+      .then(response => response.json())
+      .then(data => setManutencoes(data))
+      .catch(error => console.error('Erro ao buscar manutenções:', error));
   }, []);
 
   const [isPopupAberto, setIsPopupAberto] = useState(false);
   const [dadosManutencao, setDadosManutencao] = useState(null);
 
+  // Função de UPDATE transferida do original
+  const editarManutencao = (manutencao) => {
+    setManutencaoEdicao(manutencao);
+  };
+
   const lerManutencao = async (id) => {
     try {
-        const response = await fetch(`http://localhost:3001/manutencoes/${id}`);// procura o id da linha da tabela na url de manutencoes
+        const response = await fetch(`http://localhost:3001/manutencoes/${id}`);
         console.log('Resposta bruta:', response);
-        if (response.ok) { // se achar...
+        if (response.ok) {
           const data = await response.json();
           console.log('Dados recebidos:', data);
-          setDadosManutencao(data);     // guarda os dados
-          setIsPopupAberto(true);       // abre o popup
+          setDadosManutencao(data);
+          setIsPopupAberto(true);
     } else {
       const erro = await response.json();
       console.error('Erro do servidor:', erro);
@@ -39,23 +45,23 @@ export default function ManutencoesList() {
     }
     } catch (err) {
         alert('Erro no servidor:' + err.message);
-        console.log(err); // debug
+        console.log(err);
       }
   }
   
   const deletarManutencao = async (id) => {
     if (window.confirm('Tem certeza que deseja deletar esta manutenção?')) {
       try {
-        const response = await fetch(`http://localhost:3001/manutencoes/${id}`, { method: 'DELETE' });// procura o id da linha da tabela na url de manutencoes
-        if (response.ok) { // se achar...
-          setManutencoes(manutencoes.filter(m => m.cd_manutencao !== id)); // filtra a manutencao deletada para fora do array de manutencoes
+        const response = await fetch(`http://localhost:3001/manutencoes/${id}`, { method: 'DELETE' });
+        if (response.ok) {
+          setManutencoes(manutencoes.filter(m => m.cd_manutencao !== id));
           alert(`Manutenção n° ${id} deletada com sucesso!`);
         } else {
           alert('Erro ao deletar manutenção.');
         }
       } catch (err) {
         alert('Erro no servidor.');
-        console.log(err); // debug
+        console.log(err);
       }
     }
   };
@@ -117,6 +123,65 @@ export default function ManutencoesList() {
           <button type="submit">Salvar</button>
         </form>
       )}
+
+      {/* Formulário de UPDATE transferido do original */}
+      {manutencaoEdicao && (
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            try {
+              const manutencaoAtualizada = {
+                ...manutencaoEdicao,
+                vl_manutencao: parseFloat(manutencaoEdicao.vl_manutencao),
+                cd_funcionario: parseInt(manutencaoEdicao.cd_funcionario),
+                cd_tipo: parseInt(manutencaoEdicao.cd_tipo),
+                cd_alas: parseInt(manutencaoEdicao.cd_alas),
+                cd_status_manutencoes: parseInt(manutencaoEdicao.cd_status_manutencoes),
+              };
+
+              const response = await fetch(`http://localhost:3001/manutencoes/${manutencaoAtualizada.cd_manutencao}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(manutencaoAtualizada),
+              });
+
+              if (response.ok) {
+                alert('Manutenção atualizada com sucesso!');
+                setManutencaoEdicao(null);
+                const listaAtualizada = await fetch('http://localhost:3001/manutencoes');
+                const data = await listaAtualizada.json();
+                setManutencoes(data);
+              } else {
+                const erro = await response.text();
+                console.error('Erro no update:', erro);
+                alert('Erro ao atualizar manutenção');
+              }
+            } catch (err) {
+              alert('Erro no servidor');
+              console.error(err);
+            }
+          }}
+          style={{ marginTop: '20px', background: '#f1f1f1', padding: '10px', borderRadius: '5px' }}
+        >
+          {Object.entries(manutencaoEdicao).map(([campo, valor]) =>
+            campo !== 'cd_manutencao' && (
+              <input
+                key={campo}
+                placeholder={campo}
+                value={valor}
+                onChange={(e) =>
+                  setManutencaoEdicao({ ...manutencaoEdicao, [campo]: e.target.value })
+                }
+                required
+                style={{ margin: '5px' }}
+              />
+            )
+          )}
+          <button type="submit">Salvar Alterações</button>
+          <button type="button" onClick={() => setManutencaoEdicao(null)}>Cancelar</button>
+        </form>
+      )}
+
       <table>
         <thead>
           <tr>
@@ -130,7 +195,7 @@ export default function ManutencoesList() {
           </tr>
         </thead>
         <tbody>
-           {manutencoes.map(m => (  // aqui só represento por meio de um .map padrão
+           {manutencoes.map(m => (
             <tr key={m.cd_manutencao}>
               <td><b>{m.cd_manutencao}</b></td>
               <td>{m.placa}</td>
@@ -150,7 +215,7 @@ export default function ManutencoesList() {
               <td>
                 <img
                   src='https://img.icons8.com/?size=100&id=59856&format=png&color=5a6f9c'
-                  onClick={() => alert('Função update (a adicionar)')} /* ADICIONAR FUNCAO UPDATE*/
+                  onClick={() => editarManutencao(m)} // Atualizado para chamar a função correta
                 />
               </td>
 
@@ -160,30 +225,26 @@ export default function ManutencoesList() {
                     onClick={() => deletarManutencao(m.cd_manutencao)}
                   />
               </td>
-
             </tr>
           ))}
         </tbody>
       </table>
 
       {isPopupAberto && dadosManutencao && (
-  <div className='popupOverlay'>
-    <div className='popupBody'>
-      <h3>Detalhes da Manutenção</h3>
-      <p><b>Código:</b> {dadosManutencao.cd_manutencao}</p>
-      <p><b>Placa:</b> {dadosManutencao.placa}</p>
-      <p><b>Funcionário:</b> {dadosManutencao.cd_funcionario}</p>
-      <p><b>Tipo:</b> {dadosManutencao.cd_tipo}</p>
-      <p><b>Ala:</b> {dadosManutencao.cd_alas}</p>
-      <p><b>Valor:</b> {dadosManutencao.vl_manutencao}</p>
-      <p><b>Status:</b> {dadosManutencao.cd_status_manutencoes}</p>
-      <button onClick={() => setIsPopupAberto(false)}>Fechar</button>
+        <div className='popupOverlay'>
+          <div className='popupBody'>
+            <h3>Detalhes da Manutenção</h3>
+            <p><b>Código:</b> {dadosManutencao.cd_manutencao}</p>
+            <p><b>Placa:</b> {dadosManutencao.placa}</p>
+            <p><b>Funcionário:</b> {dadosManutencao.cd_funcionario}</p>
+            <p><b>Tipo:</b> {dadosManutencao.cd_tipo}</p>
+            <p><b>Ala:</b> {dadosManutencao.cd_alas}</p>
+            <p><b>Valor:</b> {dadosManutencao.vl_manutencao}</p>
+            <p><b>Status:</b> {dadosManutencao.cd_status_manutencoes}</p>
+            <button onClick={() => setIsPopupAberto(false)}>Fechar</button>
+          </div>
+        </div>
+      )}
     </div>
-  </div>
-)},
-      
-    </div>
-
-    
   );
 }
