@@ -32,7 +32,7 @@ Para criar um banco de dados Azure, siga o [passo a passo](https://github.com/jl
 A seguir estão dispostos os scripts SQL, separados por tipo:
 - [Tabelas (DDL)](scripts/ddl/tabelas)
 - [Índices](scripts/ddl/indices)
-- Triggers
+- [Triggers](scripts/ddl/triggers)
 - [Stored Procedures](scripts/ddl/procedures)
 - [Funções](scripts/ddl/funcoes)
 - [DML](scripts/dml)
@@ -65,4 +65,8 @@ A seguir estão dispostos os scripts SQL, separados por tipo:
 
 
 ## Referências
-> A adicionar...
+### Websites
+- Tags React e CRUD nos fóruns [StackOverflow](https://stackoverflow.com/search?q=react+crud)
+- Exemplos de React Hooks em [W3School](https://www.w3schools.com/react/react_hooks.asp)
+### Vídeos
+- Montagem de CRUD em React https://www.youtube.com/watch?v=9pBdDVRmC2s
