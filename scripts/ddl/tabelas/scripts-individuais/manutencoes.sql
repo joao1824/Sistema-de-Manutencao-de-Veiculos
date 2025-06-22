@@ -3,13 +3,13 @@
 /*==============================================================*/
 
 create table manutencoes(
-	cd_manutencao int not null primary key,
+	cd_manutencao int identity not null primary key,
 	placa varchar(7) not null,
 	cd_funcionario int not null,
-	cd_tipo int not null,
-	cd_alas int not null,
+	cd_tipo smallint not null,
+	cd_alas tinyint not null,
 	vl_manutencao numeric(5,2) null,
-	cd_status_manutencoes int not null,
+	cd_status_manutencoes tinyint not null,
 	constraint fk_status_manutencao foreign key (cd_status_manutencoes)
 	references status_manutencoes(cd_status_manutencoes),
 	constraint fk_alas foreign key (cd_alas)
