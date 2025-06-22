@@ -10,8 +10,8 @@ app.use(express.json()); //para conseguir ler em JSON
 // configurar conexão com SQL Server (local ou Azure)
 const dbConfig = {    // atenção aqui tem que ser igualzinho as config do servidor se não não funfa
   user: 'admin_user',  // essas config fui eu que usei, se quiser pofe replicar dai não precisar alterar aqui (eu usei o azure mas pode ser usado o local só que ainda não tentei)
-  password: 'P@ssw0rd',
-  server: 'termina.database.windows.net',
+  password: 'satc123!',
+  server: 'crud-server-satc-teste3.database.windows.net',
   database: 'sistema_manutencao_veiculos',
   options: {
     encrypt: true, //precisa disso se for fazer no azure
@@ -68,21 +68,19 @@ app.post('/manutencoes', async (req, res) => {
 });
 
 // FUNÇÃO READ
-app.get('/manutencoes/:id', async (req, res) => {
-  const id = req.params.id; // ler parametro chave salvo no req da url  
+app.get('/manutencoes/:id', async (req, res) => {  
   try {
-        await sql.connect(dbConfig); // esperar conectar ao banco
-        
-        const resultado = await db.query('SELECT * FROM manutencoes WHERE cd_manutencao = ?', [id]); // esperar para executar script com where na variavel dinamica (id)
-        if (resultado.length === 0) {
-          return res.status(404).json({ message: 'Manutenção não encontrada.' });
-        }
-    
-        return res.json(resultado[0]); // 👈 aqui você devolve os dados reais da manutenção
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Erro ao buscar manutenção.' });
+    await sql.connect(dbConfig);
+    const id = req.params.id; // declarar id como parametro vindo do req da url
+    const resultado = await sql.query(`SELECT * FROM manutencoes WHERE cd_manutencao = ${id}`); // antes tava db.query, o correto é sql.query
+    if (resultado.recordset.length === 0) { // recordset serve pra acessar resultado de consultas sql
+      return res.status(404).json({ message: 'Manutenção não encontrada.' });
     }
+    return res.json(resultado.recordset[0]);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Erro ao buscar manutenção.' });
+  }
 });
 
 
