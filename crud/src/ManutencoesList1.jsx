@@ -2,7 +2,15 @@ import React, { useEffect, useState } from 'react';
 import './ManutencoesList.css'
 
 export default function ManutencoesList() {
-
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [novaManutencao, setNovaManutencao] = useState({
+    placa: '',
+    cd_funcionario: '',
+    cd_tipo: '',
+    cd_alas: '',
+    vl_manutencao: '',
+    cd_status_manutencoes: ''
+  });
   const [manutencoes, setManutencoes] = useState([]);
 
   useEffect(() => {
@@ -12,17 +20,23 @@ export default function ManutencoesList() {
       .catch(error => console.error('Erro ao buscar manutenções:', error));// aqui é se der erro apartir daqui dai ele da a mensahem
   }, []);
 
-  const [readManutencao, setReadManutencao] = useState(null); // variavel que controla se o popup estará aberto (true) ou fechado (false), por padrão está fechado
-  
+  const [isPopupAberto, setIsPopupAberto] = useState(false);
+  const [dadosManutencao, setDadosManutencao] = useState(null);
+
   const lerManutencao = async (id) => {
     try {
         const response = await fetch(`http://localhost:3001/manutencoes/${id}`);// procura o id da linha da tabela na url de manutencoes
+        console.log('Resposta bruta:', response);
         if (response.ok) { // se achar...
           const data = await response.json();
-          setReadManutencao(data);
-        } else {
-          alert('Erro ao ler manutenção.');
-      } 
+          console.log('Dados recebidos:', data);
+          setDadosManutencao(data);     // guarda os dados
+          setIsPopupAberto(true);       // abre o popup
+    } else {
+      const erro = await response.json();
+      console.error('Erro do servidor:', erro);
+      alert('Erro ao ler manutenção.');
+    }
     } catch (err) {
         alert('Erro no servidor:' + err.message);
         console.log(err); // debug
@@ -46,25 +60,63 @@ export default function ManutencoesList() {
     }
   };
 
+  console.log('Conteúdo da manutenção:', dadosManutencao);
+
+
   return (
     <div id='crud'>
-      
-       <div id='cabecalho'>
+      <div id='cabecalho'>
         <h2>Lista de Manutenções</h2>
-       { /* <span onClick={() => setMostrarFormulario(!mostrarFormulario)} id='btnAdicionar'><b>+</b></span> */}
+        <span onClick={() => setMostrarFormulario(!mostrarFormulario)} id='btnAdicionar'><b>+</b></span>
       </div>
-      { /*
+
       {mostrarFormulario && (
-        <form onSubmit={criarManutencao} style={{ margin: '20px 0' }}>
-          <input placeholder="Placa" value={novaManutencao.placa} onChange={(e) => setNovaManutencao({ ...novaManutencao, placa: e.target.value })} required />
-          <input placeholder="Funcionário" value={novaManutencao.cd_funcionario} onChange={(e) => setNovaManutencao({ ...novaManutencao, cd_funcionario: e.target.value })} required />
-          <input placeholder="Tipo" value={novaManutencao.cd_tipo} onChange={(e) => setNovaManutencao({ ...novaManutencao, cd_tipo: e.target.value })} required />
-          <input placeholder="Ala" value={novaManutencao.cd_alas} onChange={(e) => setNovaManutencao({ ...novaManutencao, cd_alas: e.target.value })} required />
-          <input placeholder="Valor" type="number" value={novaManutencao.vl_manutencao} onChange={(e) => setNovaManutencao({ ...novaManutencao, vl_manutencao: e.target.value })} required />
-          <input placeholder="Status" value={novaManutencao.cd_status_manutencoes} onChange={(e) => setNovaManutencao({ ...novaManutencao, cd_status_manutencoes: e.target.value })} required />
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            try {
+              const response = await fetch('http://localhost:3001/manutencoes', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(novaManutencao),
+              });
+              if (response.ok) {
+                alert('Manutenção criada com sucesso!');
+                setNovaManutencao({
+                  placa: '',
+                  cd_funcionario: '',
+                  cd_tipo: '',
+                  cd_alas: '',
+                  vl_manutencao: '',
+                  cd_status_manutencoes: ''
+                });
+                setMostrarFormulario(false);
+                const listaAtualizada = await fetch('http://localhost:3001/manutencoes');
+                const data = await listaAtualizada.json();
+                setManutencoes(data);
+              } else {
+                alert('Erro ao criar manutenção');
+              }
+            } catch (err) {
+              alert('Erro no servidor');
+              console.error(err);
+            }
+          }}
+          style={{ marginTop: '20px', background: '#f9f9f9', padding: '10px', borderRadius: '5px' }}
+        >
+          {Object.entries(novaManutencao).map(([campo, valor]) => (
+            <input
+              key={campo}
+              placeholder={campo}
+              value={valor}
+              onChange={(e) => setNovaManutencao({ ...novaManutencao, [campo]: e.target.value })}
+              required
+              style={{ margin: '5px' }}
+            />
+          ))}
           <button type="submit">Salvar</button>
         </form>
-      )}*/}
+      )}
       <table>
         <thead>
           <tr>
@@ -114,26 +166,24 @@ export default function ManutencoesList() {
         </tbody>
       </table>
 
-      {readManutencao && (
-        <div className='popupOverlay'> {/* essa div é o fundo escuro que fica atras do popup */}
-          <div className='popupBody'> {/* essa div é o popup em si */}
-          <h3>Detalhes da Manutenção</h3>
-          <p><b>Código:</b> {readManutencao.cd_manutencao}</p>
-          <p><b>Placa:</b> {readManutencao.placa}</p>
-          <p><b>Funcionário:</b> {readManutencao.cd_funcionario}</p>
-          <p><b>Tipo:</b> {readManutencao.cd_tipo}</p>
-          <p><b>Ala:</b> {readManutencao.cd_alas}</p>
-          <p><b>Valor:</b> {readManutencao.vl_manutencao}</p>
-          <p><b>Status:</b> {readManutencao.cd_status_manutencoes}</p>
-          <button onClick={() => setReadManutencao(null)}>Fechar</button>
-          </div>
-        </div>
-        )
-      },
+      {isPopupAberto && dadosManutencao && (
+  <div className='popupOverlay'>
+    <div className='popupBody'>
+      <h3>Detalhes da Manutenção</h3>
+      <p><b>Código:</b> {dadosManutencao.cd_manutencao}</p>
+      <p><b>Placa:</b> {dadosManutencao.placa}</p>
+      <p><b>Funcionário:</b> {dadosManutencao.cd_funcionario}</p>
+      <p><b>Tipo:</b> {dadosManutencao.cd_tipo}</p>
+      <p><b>Ala:</b> {dadosManutencao.cd_alas}</p>
+      <p><b>Valor:</b> {dadosManutencao.vl_manutencao}</p>
+      <p><b>Status:</b> {dadosManutencao.cd_status_manutencoes}</p>
+      <button onClick={() => setIsPopupAberto(false)}>Fechar</button>
+    </div>
+  </div>
+)},
       
     </div>
 
     
   );
 }
-
