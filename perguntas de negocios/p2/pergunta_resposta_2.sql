@@ -35,8 +35,10 @@ create or alter function fn_porcentagem_media (@valor numeric(7,2),@cd_funcionar
 		declare @resposta numeric(7,2);
 		declare @tempo_entrada date;
 		declare @tempo_total int;
+		declare @tempo_meses int;
 		set @tempo_entrada = (select data_entrada from funcionarios where cd_funcionario = @cd_funcionario);
-		set @tempo_total = floor(datediff(year,@tempo_entrada,getdate()));
+		set @tempo_total = floor((datediff(month,@tempo_entrada,getdate())) / 12) ;
+		
 		if @tempo_total <= 0
 			begin
 				set @tempo_total = 1
@@ -81,3 +83,12 @@ create or alter procedure pr_relatorio_top3_manutencoes as
 
 
 exec pr_relatorio_top3_manutencoes
+
+
+select * from funcionarios
+
+
+
+
+
+
