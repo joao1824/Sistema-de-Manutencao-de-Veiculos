@@ -4,7 +4,7 @@
 --Devem ser levadas em conta apenas as manutenções com valor igual ou superior a R$ 200,00, realizadas por funcionários que estejam atualmente ativos na empresa. 
 --Para cada um desses três funcionários, devem ser apresentados o nome, a quantidade total de manutenções realizadas,
 --o valor total das manutenções considerando o desconto de 20% (ou seja, o lucro líquido gerado), a média do lucro líquido por manutenção e o valor de uma comissão.
---Essa comissão deve ser calculada como uma porcentagem da média do lucro líquido, sendo essa porcentagem equivalente ao tempo de empresa do funcionário (em anos completos) multiplicado por 10. 
+--Essa comissão deve ser calculada como uma porcentagem da média do lucro líquido, sendo essa porcentagem equivalente ao tempo de empresa do funcionário (em anos completos, se for menos que 1, considera 1 ano) multiplicado por 10. 
 --Por exemplo, um funcionário com 3 anos de empresa receberá 30% de comissão sobre a média do lucro líquido.
 
 
@@ -37,6 +37,12 @@ create or alter function fn_porcentagem_media (@valor numeric(7,2),@cd_funcionar
 		declare @tempo_total int;
 		set @tempo_entrada = (select data_entrada from funcionarios where cd_funcionario = @cd_funcionario);
 		set @tempo_total = floor(datediff(year,@tempo_entrada,getdate()));
+		if @tempo_total <= 0
+			begin
+				set @tempo_total = 1
+			end
+
+
 		set @resposta = (@valor * (@tempo_total*10))/100;
 
 		return @resposta
@@ -70,6 +76,7 @@ create or alter procedure pr_relatorio_top3_manutencoes as
 
 
 		select * from cte_media_manutencao
+			
 	end
 
 
