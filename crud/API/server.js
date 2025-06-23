@@ -9,7 +9,7 @@ app.use(express.json());
 const dbConfig = {
   user: 'admin_user',
   password: 'satc123!',
-  server: 'crud-server-satc-teste4.database.windows.net',
+  server: 'crud-server-satc.database.windows.net',
   database: 'sistema_manutencao_veiculos',
   options: {
     encrypt: true,
