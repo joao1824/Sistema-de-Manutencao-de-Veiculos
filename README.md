@@ -61,7 +61,8 @@ A seguir estão dispostos os scripts SQL, separados por tipo:
 5. Acessar o link apresentado no terminal.
 
 ## Relatório Final
-> A adicionar...
+
+- Todas as informações pertinentes estão no [Relatório Final](https://github.com/joao1824/Sistema-de-Manutencao-de-Veiculos/blob/main/relatorio-final/relat%C3%B3rio.pdf)
 
 
 ## Referências
