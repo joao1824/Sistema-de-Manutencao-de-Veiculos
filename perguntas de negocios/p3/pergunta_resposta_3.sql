@@ -18,3 +18,5 @@ create or alter procedure pr_AlaLucro as
   order by
     Quant DESC
   END
+
+exec pr_AlaLucro

@@ -11,9 +11,9 @@
 
 --Aplica um desconto de 20% sobre o valor informado.
 
-create or alter function fn_20 (@valor numeric(5,2)) returns numeric(5,2) as  
+create or alter function fn_20 (@valor numeric(15,2)) returns numeric(15,2) as  
 	begin
-		declare @descontado numeric(5,2);
+		declare @descontado numeric(15,2);
 		set @descontado = @valor * 0.8;
 		return @descontado;
 	end
@@ -21,18 +21,18 @@ create or alter function fn_20 (@valor numeric(5,2)) returns numeric(5,2) as
 
 --Função para conseguir a media de uma valor já somado préviamente e dividir pela quantidade
 
-create or alter function fn_media (@valor numeric(5,2),@quantidade int) returns numeric(5,2) as 
+create or alter function fn_media (@valor numeric(15,2),@quantidade int) returns numeric(15,2) as 
 	begin
-		declare @media numeric(5,2);
+		declare @media numeric(15,2);
 		set @media = @valor / @quantidade;
 		return @media;
 	end
 
 -- Função usada para conseguir a % de comissão do funcionario com base em quanto tempo eles esta na empressa
 
-create or alter function fn_porcentagem_media (@valor numeric(5,2),@cd_funcionario int) returns numeric(5,2) as 
+create or alter function fn_porcentagem_media (@valor numeric(15,2),@cd_funcionario int) returns numeric(15,2) as 
 	begin
-		declare @resposta numeric(5,2);
+		declare @resposta numeric(15,2);
 		declare @tempo_entrada date;
 		declare @tempo_total int;
 		set @tempo_entrada = (select data_entrada from funcionarios where cd_funcionario = @cd_funcionario);
@@ -64,7 +64,7 @@ create or alter procedure pr_relatorio_top3_manutencoes as
 
 		cte_media_manutencao as (
 			select nm_funcionario as nome,quantidade_de_manutencao,soma_manutencoes,dbo.fn_media(soma_manutencoes,quantidade_de_manutencao) as media,
-			dbo.fn_porcentagem_media(dbo.fn_media_3(soma_manutencoes,quantidade_de_manutencao),cd_funcionario) as comissao from cte_soma_manutencao
+			dbo.fn_porcentagem_media(dbo.fn_media(soma_manutencoes,quantidade_de_manutencao),cd_funcionario) as comissao from cte_soma_manutencao
 			where ranke <= 3
 		)
 

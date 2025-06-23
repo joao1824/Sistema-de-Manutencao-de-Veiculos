@@ -25,3 +25,5 @@ create or alter procedure pr_VerificaSeguro as
     WHERE
         manutencoes.cd_status_manutencoes = 6
 end
+
+exec pr_VerificaSeguro
