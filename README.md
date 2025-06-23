@@ -72,4 +72,4 @@ Todas as informações pertinentes ao projeto estão no arquivo do [Relatório F
 - Exemplos de React Hooks em [W3School](https://www.w3schools.com/react/react_hooks.asp)
 ### Vídeos
 - Montagem de CRUD em React https://www.youtube.com/watch?v=9pBdDVRmC2s
-- React JS + Node JS + Sql Server https://www.youtube.com/watch?v=9pBdDVRmC2s
+
