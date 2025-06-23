@@ -1,8 +1,8 @@
---Função para conseguir a media de uma valor já somado préviamente e dividir pela quantidade
+--Função para conseguir a media de uma valor já somado previamente e dividir pela quantidade
 
-create or alter function fn_media (@valor numeric(5,2),@quantidade int) returns numeric(5,2) as 
+create or alter function fn_media (@valor numeric(7,2),@quantidade int) returns numeric(7,2) as 
 	begin
-		declare @media numeric(5,2);
+		declare @media numeric(7,2);
 		set @media = @valor / @quantidade;
 		return @media;
 	end

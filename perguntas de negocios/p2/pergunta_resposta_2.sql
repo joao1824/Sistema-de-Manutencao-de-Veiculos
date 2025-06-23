@@ -1,38 +1,38 @@
 --Pergunta
 
---Solicita-se a identificaÁ„o dos trÍs funcion·rios que mais geraram lucro lÌquido para a empresa, considerando como custo operacional um desconto de 20% sobre o valor de cada manutenÁ„o.
---Devem ser levadas em conta apenas as manutenÁıes com valor igual ou superior a R$ 200,00, realizadas por funcion·rios que estejam atualmente ativos na empresa. 
---Para cada um desses trÍs funcion·rios, devem ser apresentados o nome, a quantidade total de manutenÁıes realizadas,
---o valor total das manutenÁıes considerando o desconto de 20% (ou seja, o lucro lÌquido gerado), a mÈdia do lucro lÌquido por manutenÁ„o e o valor de uma comiss„o.
---Essa comiss„o deve ser calculada como uma porcentagem da mÈdia do lucro lÌquido, sendo essa porcentagem equivalente ao tempo de empresa do funcion·rio (em anos completos) multiplicado por 10. 
---Por exemplo, um funcion·rio com 3 anos de empresa receber· 30% de comiss„o sobre a mÈdia do lucro lÌquido.
+--Solicita-se a identifica√ß√£o dos tr√™s funcion√°rios que mais geraram lucro l√≠quido para a empresa, considerando como custo operacional um desconto de 20% sobre o valor de cada manuten√ß√£o.
+--Devem ser levadas em conta apenas as manuten√ß√µes com valor igual ou superior a R$ 200,00, realizadas por funcion√°rios que estejam atualmente ativos na empresa. 
+--Para cada um desses tr√™s funcion√°rios, devem ser apresentados o nome, a quantidade total de manuten√ß√µes realizadas,
+--o valor total das manuten√ß√µes considerando o desconto de 20% (ou seja, o lucro l√≠quido gerado), a m√©dia do lucro l√≠quido por manuten√ß√£o e o valor de uma comiss√£o.
+--Essa comiss√£o deve ser calculada como uma porcentagem da m√©dia do lucro l√≠quido, sendo essa porcentagem equivalente ao tempo de empresa do funcion√°rio (em anos completos) multiplicado por 10. 
+--Por exemplo, um funcion√°rio com 3 anos de empresa receber√° 30% de comiss√£o sobre a m√©dia do lucro l√≠quido.
 
 
 
 --Aplica um desconto de 20% sobre o valor informado.
 
-create or alter function fn_20 (@valor numeric(5,2)) returns numeric(5,2) as  
+create or alter function fn_20 (@valor numeric(7,2)) returns numeric(7,2) as  
 	begin
-		declare @descontado numeric(5,2);
+		declare @descontado numeric(7,2);
 		set @descontado = @valor * 0.8;
 		return @descontado;
 	end
 
 
---FunÁ„o para conseguir a media de uma valor j· somado prÈviamente e dividir pela quantidade
+--Fun√ß√£o para conseguir a media de uma valor j√° somado pr√©viamente e dividir pela quantidade
 
-create or alter function fn_media (@valor numeric(5,2),@quantidade int) returns numeric(5,2) as 
+create or alter function fn_media (@valor numeric(7,2),@quantidade int) returns numeric(7,2) as 
 	begin
-		declare @media numeric(5,2);
+		declare @media numeric(7,2);
 		set @media = @valor / @quantidade;
 		return @media;
 	end
 
--- FunÁ„o usada para conseguir a % de comiss„o do funcionario com base em quanto tempo eles esta na empressa
+-- Fun√ß√£o usada para conseguir a % de comiss√£o do funcionario com base em quanto tempo eles esta na empressa
 
-create or alter function fn_porcentagem_media (@valor numeric(5,2),@cd_funcionario int) returns numeric(5,2) as 
+create or alter function fn_porcentagem_media (@valor numeric(7,2),@cd_funcionario int) returns numeric(7,2) as 
 	begin
-		declare @resposta numeric(5,2);
+		declare @resposta numeric(7,2);
 		declare @tempo_entrada date;
 		declare @tempo_total int;
 		set @tempo_entrada = (select data_entrada from funcionarios where cd_funcionario = @cd_funcionario);
@@ -64,7 +64,7 @@ create or alter procedure pr_relatorio_top3_manutencoes as
 
 		cte_media_manutencao as (
 			select nm_funcionario as nome,quantidade_de_manutencao,soma_manutencoes,dbo.fn_media(soma_manutencoes,quantidade_de_manutencao) as media,
-			dbo.fn_porcentagem_media(dbo.fn_media_3(soma_manutencoes,quantidade_de_manutencao),cd_funcionario) as comissao from cte_soma_manutencao
+			dbo.fn_porcentagem_media(dbo.fn_media(soma_manutencoes,quantidade_de_manutencao),cd_funcionario) as comissao from cte_soma_manutencao
 			where ranke <= 3
 		)
 
