@@ -8,7 +8,7 @@ create or alter procedure pr_AlaLucro as
     select alas.ala AS NomeAla, 
     COUNT(manutencoes.cd_alas) AS Quant,
     AVG(manutencoes.vl_manutencao) AS Media,
-    SUM(manutencoes.vl_manutencao * 0.85) AS LucroLiquido
+    AVG(manutencoes.vl_manutencao * 0.85) AS LucroLiquido
   from
     manutencoes
   Inner Join 
