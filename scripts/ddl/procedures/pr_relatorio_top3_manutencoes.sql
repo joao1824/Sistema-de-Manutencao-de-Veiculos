@@ -43,7 +43,7 @@ create or alter procedure pr_relatorio_top3_manutencoes as
 
 		cte_media_manutencao as (
 			select nm_funcionario as nome,quantidade_de_manutencao,soma_manutencoes,dbo.fn_media(soma_manutencoes,quantidade_de_manutencao) as media,
-			dbo.fn_porcentagem_media(dbo.fn_media_3(soma_manutencoes,quantidade_de_manutencao),cd_funcionario) as comissao from cte_soma_manutencao
+			dbo.fn_porcentagem_media(dbo.fn_media(soma_manutencoes,quantidade_de_manutencao),cd_funcionario) as comissao from cte_soma_manutencao
 			where ranke <= 3
 		)
 

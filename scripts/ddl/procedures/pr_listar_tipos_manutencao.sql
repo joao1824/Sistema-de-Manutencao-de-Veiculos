@@ -6,6 +6,3 @@ begin
     order by descricao;
 end;
 GO
-
--- 4. Executar a procedure
-exec pr_listar_tipos_manutencao;
