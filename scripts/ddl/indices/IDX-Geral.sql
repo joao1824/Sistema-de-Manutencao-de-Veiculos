@@ -15,7 +15,6 @@ create nonclustered index idx_status_seguros_status on status_seguros(status)
 
 create nonclustered index idx_clientes_nm_cliente on clientes(nm_cliente)
 
-create nonclustered index idx_tipos_manutencao_cd_tipo on tipos_manutencao(cd_tipo)
 create nonclustered index idx_tipos_manutencao_descricao on tipos_manutencao(descricao)
 
 
