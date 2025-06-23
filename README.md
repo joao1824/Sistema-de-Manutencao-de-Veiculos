@@ -66,7 +66,9 @@ A seguir estão dispostos os scripts SQL, separados por tipo:
 
 ## Referências
 ### Websites
+- Integrar o Banco de Dado no react [mssql - npm](https://www.npmjs.com/package/mssql)
 - Tags React e CRUD nos fóruns [StackOverflow](https://stackoverflow.com/search?q=react+crud)
 - Exemplos de React Hooks em [W3School](https://www.w3schools.com/react/react_hooks.asp)
 ### Vídeos
 - Montagem de CRUD em React https://www.youtube.com/watch?v=9pBdDVRmC2s
+- React JS + Node JS + Sql Server https://www.youtube.com/watch?v=9pBdDVRmC2s
